@@ -50,6 +50,14 @@ const UserModal: React.FC<UserModalProps> = ({ user, onClose }) => {
               <span className="detail-label">Phone</span>
               <span className="detail-value">{user.phone}</span>
             </div>
+            <div className="detail-group" style={{ gridColumn: '1 / -1' }}>
+              <span className="detail-label">Address</span>
+              <span className="detail-value">
+                {user.address
+                  ? `${user.address.suite}, ${user.address.street}, ${user.address.city} - ${user.address.zipcode}`
+                  : 'N/A'}
+              </span>
+            </div>
             <div className="detail-group">
               <span className="detail-label">Website</span>
               <span className="detail-value">
