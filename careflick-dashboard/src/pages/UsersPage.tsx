@@ -8,7 +8,7 @@ import UserForm from '../components/users/UserForm';
 import SkeletonCard from '../components/ui/SkeletonCard';
 import './UsersPage.css';
 
-const usersPerPage = 8;
+const usersPerPage = 6;
 
 const UsersPage: React.FC = () => {
   const { users, isLoadingUsers, usersError, addUser, editUser, deleteUser } = useAppContext();
@@ -56,9 +56,7 @@ const UsersPage: React.FC = () => {
 
   const handleDeleteClick = (e: React.MouseEvent, id: number) => {
     e.stopPropagation();
-    if (window.confirm("Are you sure you want to delete this user? This cannot be undone.")) {
-      deleteUser(id);
-    }
+    deleteUser(id);
   };
 
   const handleFormSubmit = (user: User) => {
@@ -84,7 +82,7 @@ const UsersPage: React.FC = () => {
           <p>Manage all users and their relational data profiles natively.</p>
         </div>
         
-        <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', width: '100%', maxWidth: '450px' }}>
+        <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', flex: '1', maxWidth: '400px' }}>
           <UserSearch 
             searchTerm={searchQuery} 
             onSearchChange={(value) => {

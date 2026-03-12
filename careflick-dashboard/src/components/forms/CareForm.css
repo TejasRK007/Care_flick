@@ -172,6 +172,17 @@ textarea.form-control {
   border: 1px solid #e5e7eb;
 }
 
+.clickable-badge {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.clickable-badge:hover {
+  background-color: #e0e7ff;
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
 /* Actions Table Elements */
 .actions-table td {
   vertical-align: middle;
@@ -193,17 +204,22 @@ textarea.form-control {
   justify-content: center;
   cursor: pointer;
   transition: all 0.2s ease;
-  color: var(--text-muted);
+}
+
+.btn-edit {
+  color: var(--primary-color);
 }
 
 .btn-edit:hover {
   background-color: #e0e7ff;
-  color: var(--primary-color);
+}
+
+.btn-delete {
+  color: #dc2626;
 }
 
 .btn-delete:hover {
   background-color: #fee2e2;
-  color: #dc2626;
 }
 
 /* Table Utilities */
@@ -251,4 +267,24 @@ textarea.form-control {
 
 .data-value {
   color: var(--text-color);
+}
+
+/* Schema Selector (Care Forms page header dropdowns) */
+.schema-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.schema-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+}
+
+.schema-select {
+  min-width: 200px;
+  appearance: auto;
 }

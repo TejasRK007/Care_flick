@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import CareForm from '../components/forms/CareForm';
 import SubmittedFormsTable from '../components/forms/SubmittedFormsTable';
 import FormStats from '../components/forms/FormStats';
-import PdfUploader from '../components/forms/PdfUploader';
+import PdfReader from '../components/forms/PdfReader';
 import type { FormSubmission } from '../types/form';
 import { careFormSchemas } from '../data/forms';
 import { useAppContext } from '../context/AppContext';
@@ -74,7 +74,7 @@ const CareFormsPage: React.FC = () => {
           <p>Manage, track, and process dynamic patient care arrays.</p>
         </div>
         
-        <div style={{ display: 'flex', gap: '1rem' }}>
+        <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-end' }}>
            <div className="schema-selector">
             <label htmlFor="userTargetSelect" className="schema-label" style={{ color: 'var(--primary-color)' }}>Select User:</label>
             <select 
@@ -84,7 +84,7 @@ const CareFormsPage: React.FC = () => {
               onChange={(e) => setSelectedUserId(e.target.value)}
               disabled={!!editingSubmission} // Lock mapping safely during edits explicitly overriding loops
             >
-              <option value="">[ Choose User ▼ ]</option>
+              <option value=""> Choose User </option>
               {users.map(user => (
                 <option key={user.id} value={user.id}>
                   {user.name}
@@ -127,12 +127,12 @@ const CareFormsPage: React.FC = () => {
               ) : (
                 <>
                   {!editingSubmission && (
-                    <PdfUploader 
-                      onUploadSuccess={(parsedData) => {
+                    <PdfReader 
+                      onSubmit={(parsedData) => {
                         const finalSubmission: FormSubmission = {
                           id: crypto.randomUUID(),
                           userId: parseInt(selectedUserId, 10),
-                          formName: parsedData.formName,
+                          formName: 'Health Assessment',
                           formData: parsedData,
                           submittedAt: new Date().toISOString()
                         };
