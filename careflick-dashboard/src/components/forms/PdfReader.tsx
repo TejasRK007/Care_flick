@@ -61,7 +61,7 @@ const PdfReader: React.FC<PdfReaderProps> = ({ onSubmit }) => {
     const oxygenLevel = text.match(/Oxygen\s*(?:Level|Saturation|SpO2)?\s+(\d{2,3})\s*%?/i)?.[1]?.trim();
     const respiratoryRate = text.match(/Respiratory\s*Rate.*?(\d{1,3})/i)?.[1]?.trim();
 
-    // Detect symptoms with checkmarks
+    // Detect symptoms — PDF text extraction can produce varied characters for checkmarks
     const symptomList = [
       'Fever', 'Fatigue', 'Headache', 'Cough', 'Nausea',
       'Dizziness', 'Chest Pain', 'Shortness of Breath',
@@ -70,13 +70,27 @@ const PdfReader: React.FC<PdfReaderProps> = ({ onSubmit }) => {
     ];
     const symptoms: string[] = [];
     for (const symptom of symptomList) {
-      // Match: "Symptom ✓", "Symptom ✔", "Symptom: Yes", "[x] Symptom", "☑ Symptom"
-      const pattern = new RegExp(
-        `${symptom}\\s*[✓✔☑]|\\[x\\]\\s*${symptom}|${symptom}\\s*:\\s*Yes`,
-        'i'
-      );
-      if (pattern.test(text)) {
+      // Match many formats: checkmarks, unicode, Yes/Y, [x], or just the word near a check area
+      const patterns = [
+        new RegExp(`${symptom}\\s*[✓✔☑✅\u2713\u2714\u2611]`, 'i'),
+        new RegExp(`[✓✔☑✅\u2713\u2714\u2611]\\s*${symptom}`, 'i'),
+        new RegExp(`\\[\\s*[xX]\\s*\\]\\s*${symptom}`, 'i'),
+        new RegExp(`${symptom}\\s*[:\-]\\s*(?:Yes|Y|True)`, 'i'),
+        new RegExp(`${symptom}\\s*$`, 'im'),
+      ];
+      if (patterns.some(p => p.test(text))) {
         symptoms.push(symptom);
+      }
+    }
+
+    // Also try to extract from a "Symptoms" field value
+    const symptomsField = text.match(/Symptoms\s*[:\-]\s*([^\n]+)/i)?.[1];
+    if (symptomsField) {
+      const parts = symptomsField.split(/[,;]+/).map(s => s.trim()).filter(Boolean);
+      for (const part of parts) {
+        if (part.length > 1 && part.length < 40 && !symptoms.includes(part)) {
+          symptoms.push(part);
+        }
       }
     }
 

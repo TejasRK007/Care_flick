@@ -96,6 +96,9 @@
 textarea.form-control {
   resize: vertical;
   min-height: 100px;
+  max-width: 100%;
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .invalid-feedback {

@@ -121,9 +121,14 @@ const SubmittedFormsTable: React.FC<SubmittedFormsTableProps> = ({ forms, onEdit
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
                 {Object.entries(viewingForm.formData)
-                  .filter(([key, val]) => key !== 'rawText' && val !== '' && val !== null && val !== undefined)
+                  .filter(([key, val]) => {
+                    if (key === 'rawText' || key === 'symptoms') return false;
+                    if (val === '' || val === null || val === undefined) return false;
+                    if (Array.isArray(val) && val.length === 0) return false;
+                    return true;
+                  })
                   .map(([key, value]) => {
-                    const isWide = key === 'incidentDescription' || key === 'symptoms' || key === 'formName';
+                    const isWide = key === 'incidentDescription' || key === 'formName';
                     return (
                       <div
                         key={key}
@@ -138,6 +143,18 @@ const SubmittedFormsTable: React.FC<SubmittedFormsTableProps> = ({ forms, onEdit
                     );
                   })}
               </div>
+
+              {/* Symptoms rendered as tags */}
+              {viewingForm.formData.symptoms && Array.isArray(viewingForm.formData.symptoms) && viewingForm.formData.symptoms.length > 0 && (
+                <div style={{ marginTop: '1rem' }}>
+                  <span className="detail-label">Symptoms</span>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.375rem', marginTop: '0.25rem' }}>
+                    {viewingForm.formData.symptoms.map((s: string) => (
+                      <span key={s} className="pdf-symptom-tag">{s}</span>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               {viewingForm.formData.rawText && (
                 <details style={{ marginTop: '1.5rem', borderTop: '1px solid var(--border-color)', paddingTop: '1rem' }}>

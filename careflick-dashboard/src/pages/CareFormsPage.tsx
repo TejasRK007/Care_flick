@@ -71,7 +71,7 @@ const CareFormsPage: React.FC = () => {
       <header className="page-header header-with-actions">
         <div>
           <h1>Care Forms Dashboard</h1>
-          <p>Manage, track, and process dynamic patient care arrays.</p>
+          <p>Manage, track, and process dynamic patient care.</p>
         </div>
         
         <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-end' }}>
