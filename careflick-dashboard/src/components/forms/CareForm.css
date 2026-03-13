@@ -12,14 +12,20 @@
   }
 }
 
+/* Allow calendar dropdown to overflow the form card */
+.form-section .card,
+.form-section .card-body {
+  overflow: visible;
+}
+
 .card-header {
   padding: 1.25rem 1.5rem;
   border-bottom: 1px solid var(--border-color);
-  background-color: #f9fafb;
+  background-color: var(--surface-color);
 }
 
 .card-header.highlight-header {
-  background-color: #f3f4f6;
+  background-color: var(--bg-color);
   border-bottom-color: var(--primary-color);
   border-bottom-width: 2px;
 }
@@ -73,7 +79,7 @@
   border: 1px solid var(--border-color);
   border-radius: 6px;
   font-size: 0.95rem;
-  background-color: var(--surface-color);
+  background-color: var(--bg-color); /* use root bg for inputs to sink them into the surface */
   color: var(--text-color);
   transition: all 0.2s ease;
   font-family: inherit;
@@ -155,7 +161,9 @@ textarea.form-control {
 }
 
 .btn-secondary:hover {
-  background-color: #f3f4f6;
+  background-color: var(--bg-color);
+  color: var(--primary-color);
+  border-color: var(--primary-color);
 }
 
 /* Badges for SubmittedFormsTable */
@@ -170,9 +178,9 @@ textarea.form-control {
 }
 
 .badge-form {
-  background-color: #f3f4f6;
-  color: #374151;
-  border: 1px solid #e5e7eb;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
 }
 
 .clickable-badge {
@@ -181,8 +189,8 @@ textarea.form-control {
 }
 
 .clickable-badge:hover {
-  background-color: #e0e7ff;
-  color: var(--primary-color);
+  background-color: var(--primary-color);
+  color: white;
   border-color: var(--primary-color);
 }
 
@@ -214,15 +222,15 @@ textarea.form-control {
 }
 
 .btn-edit:hover {
-  background-color: #e0e7ff;
+  background-color: rgba(99, 102, 241, 0.1); /* transparent primary */
 }
 
 .btn-delete {
-  color: #dc2626;
+  color: #ef4444; /* red-500 */
 }
 
 .btn-delete:hover {
-  background-color: #fee2e2;
+  background-color: rgba(239, 68, 68, 0.1);
 }
 
 /* Table Utilities */

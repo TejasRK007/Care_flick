@@ -8,6 +8,17 @@
   --border-color: #e5e7eb;
 }
 
+.dark {
+  --primary-color: #818cf8;
+  --primary-hover: #a5b4fc;
+  --bg-color: #0f172a;       /* Slate 900 - Richer dark background */
+  --surface-color: #1e293b;  /* Slate 800 - distinct card surface */
+  --text-color: #f8fafc;     /* Slate 50 - Brighter white text */
+  --text-muted: #94a3b8;     /* Slate 400 - Readable muted text */
+  --border-color: #334155;   /* Slate 700 - Subtler borders */
+}
+
+
 * {
   box-sizing: border-box;
 }
