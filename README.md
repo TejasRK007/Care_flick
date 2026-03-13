@@ -1,4 +1,4 @@
- 🏥 Careflick Dashboard
+# 🏥 Careflick Dashboard
 
 A care management dashboard built with React and TypeScript for the Careflick Frontend Internship Assignment. It lets you browse users from an API, manage their profiles, fill out care forms, and even upload PDF health assessments to extract patient data right in the browser.
 
@@ -17,11 +17,21 @@ A care management dashboard built with React and TypeScript for the Careflick Fr
 - A "Submitted Care Forms" section inside each user's modal to see all forms linked to them
 
 ### 📋 Care Forms Tab
-- Pick a user, select a form type, and fill it out — fields are generated dynamically from form schemas
-- Validation on required fields, email format, and phone numbers (powered by React Hook Form)
-- **PDF Upload:** drag-and-drop a Health Assessment PDF and the app extracts patient data (vitals, symptoms, demographics) using PDF.js — all client-side, no server needed
-- After extracting, you get a preview card to review the data before confirming
-- Every submitted form gets linked to the selected user and shows up in their profile
+- Pick a user, select a form type, and fill it out — fields are generated dynamically from form schemas (defined in `src/data/forms.ts`).
+- Validation rules are dynamically applied based on the form schema (e.g. required fields, email/phone format, temperature bounds: 60-115°F, blood pressure constraints: 60-250 systolic/30-150 diastolic).
+- Uses a **custom inline Calendar Picker component** for date fields with month/year navigation and "Today" selection.
+- **Dynamic Form Architecture:** Care forms scale infinitely without writing new components. You simply define a new `FormSchema` JSON object and the `CareForm` component automatically generates the correct inputs (text, number, date, select, textarea) and bind validation rules via React Hook Form.
+
+#### 📄 PDF Reader Specifications
+- **Client-Side Parsing:** The app uses `pdfjs-dist` to parse uploaded Health Assessment PDFs directly in the browser. *No server or backend API is involved, ensuring complete data privacy.*
+- **Data Extraction:** 
+  - Extracts text from all pages of the PDF.
+  - Applies a suite of precise **Regular Expressions** to capture standard medical data fields: *Resident/Patient Name, Age, Caregiver Name, Vitals (Temperature, Blood Pressure, Heart Rate, SpO2, Respiratory Rate), Symptoms, Incident Type, and Incident Descriptions*.
+  - **Auto-Detection:** Detects the form type based on keywords (e.g., if it contains "incident report", it categorizes the data as an Incident Report form).
+  - **Dynamic Key-Value Fallback:** Parses any unknown "Label: Value" pairs in the PDF and adds them to the form data payload automatically, ensuring custom fields from PDFs aren't lost.
+- **Preview & Confirmation:** After extraction, the data is pushed into the `PdfReader.tsx` component, allowing the user to review the extracted fields before committing them to the AppContext state.
+
+Every submitted form (whether manual or via PDF) gets linked to the selected user's ID and shows up in their permanent profile modal.
 
 ---
 
