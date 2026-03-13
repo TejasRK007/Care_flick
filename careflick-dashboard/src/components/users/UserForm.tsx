@@ -50,6 +50,12 @@ const UserForm: React.FC<UserFormProps> = ({ initialData, onSubmitSuccess, onCan
       username: isEditMode ? initialData.username : data.name.toLowerCase().replace(/\s/g, ''),
       website: isEditMode ? initialData.website : 'careflick.example.com',
       company: isEditMode ? initialData.company : { name: 'Careflick Network' },
+      address: isEditMode ? initialData.address : {
+        street: '123 Care Lane',
+        suite: 'Apt 1',
+        city: 'Careville',
+        zipcode: '12345'
+      },
     };
     
     onSubmitSuccess(userPayload);
